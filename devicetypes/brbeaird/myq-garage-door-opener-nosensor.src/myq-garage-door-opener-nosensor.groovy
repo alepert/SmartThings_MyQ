@@ -1,7 +1,7 @@
 /**
  *  MyQ Garage Door Opener NoSensor
  *
- *  Copyright 2017 Brian Beaird
+ *  Copyright 2018 Brian Beaird
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  *  in compliance with the License. You may obtain a copy of the License at:
@@ -12,13 +12,15 @@
  *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  *  for the specific language governing permissions and limitations under the License.
  *
- *  Last Updated : 6/6/2017
+ *  Last Updated : 2019-01-04
  *
  */
 metadata {
-	definition (name: "MyQ Garage Door Opener-NoSensor", namespace: "brbeaird", author: "Brian Beaird") {
-		capability "Garage Door Control"
+	definition (name: "MyQ Garage Door Opener-NoSensor", namespace: "brbeaird", author: "Brian Beaird", vid: "generic-contact-4", ocfdevicetype: "oic.d.garagedoor", mnmn: "SmartThings") {
 		capability "Door Control"
+		capability "Garage Door Control"
+		capability "Actuator"
+        //capability "Health Check" Will be needed eventually for new app compatability but is not documented well enough yet
         
         attribute "OpenButton", "string"
         attribute "CloseButton", "string"
@@ -33,14 +35,7 @@ metadata {
 		
 		multiAttributeTile(name:"door", type: "lighting", width: 6, height: 4, canChangeIcon: false) {
 			tileAttribute ("device.door", key: "PRIMARY_CONTROL") {
-				attributeState "unknown", label:'MyQ Door (No sensor)', icon:"st.doors.garage.garage-closed",    backgroundColor:"#6495ED"
-				attributeState "moving",  label:'${name}', action:"door control.open",   icon:"st.doors.garage.garage-closed",  backgroundColor:"#4169E1", nextState: "opening"
-				attributeState "open",    label:'${name}', action:"door control.close",  icon:"st.doors.garage.garage-open",    backgroundColor:"#e86d13", nextState: "waiting"
-                attributeState "closed",    label:'${name}', action:"door control.open",  icon:"st.doors.garage.garage-closed",    backgroundColor:"#00a0dc", nextState: "opening"
-				attributeState "opening", label:'${name}', 								 icon:"st.doors.garage.garage-opening", backgroundColor:"#cec236"
-				attributeState "closing", label:'${name}', 								 icon:"st.doors.garage.garage-closing", backgroundColor:"#cec236"
-				attributeState "waiting", label:'${name}', 								 icon:"st.doors.garage.garage-closing", backgroundColor:"#cec236", nextState: "closing"
-				attributeState "stopped", label:'${name}', action:"door control.close",  icon:"st.doors.garage.garage-closing", backgroundColor:"#1ee3ff", nextState: "closing"
+				attributeState "unknown", label:'MyQ Door (No sensor)', icon:"st.doors.garage.garage-closed",    backgroundColor:"#6495ED"				
 			}			
 		}
       
@@ -92,5 +87,5 @@ def log(msg){
 }
 
 def showVersion(){
-	return "1.1.1"
+	return "1.1.8"
 }
